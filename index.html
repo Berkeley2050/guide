@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkeley2050 - Channel Navigation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .channel-link {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .channel-link:hover {
+            background: #cc0000;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        h2 {
+            color: #1a1a1a;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .playlist-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .playlist-card:hover {
+            border-color: #ff0000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .playlist-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        
+        .playlist-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .playlist-meta {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .playlist-link {
+            display: inline-block;
+            color: #065fd4;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .playlist-link:hover {
+            text-decoration: underline;
+        }
+        
+        .tool-section {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .tool-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        
+        .tool-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+        
+        button {
+            background: #065fd4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #0547a8;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .output-area {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            display: none;
+        }
+        
+        .output-area.show {
+            display: block;
+        }
+        
+        .help-text {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .example {
+            background: white;
+            padding: 15px;
+            border-left: 3px solid #065fd4;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Berkeley2050</h1>
+            <p class="subtitle">Berkeley housing, development, and civic engagement</p>
+            <a href="https://www.youtube.com/@BuildBerkeley2050" class="channel-link" target="_blank">Visit YouTube Channel →</a>
+        </header>
+        
+        <div class="section">
+            <h2>Featured Content</h2>
+            
+            <div class="playlist-grid">
+                <div class="playlist-card" onclick="window.open('https://www.youtube.com/@BuildBerkeley2050/playlists', '_blank')">
+                    <div class="playlist-title">February 2026 Panel Presentations</div>
+                    <div class="playlist-description">
+                        Four presentations made to a panel of judges on February 6, 2026, covering Berkeley development proposals and housing policy.
+                    </div>
+                    <div class="playlist-meta">4 videos</div>
+                    <a href="#" class="playlist-link" onclick="event.stopPropagation();">View Playlist →</a>
+                </div>
+                
+                <div class="playlist-card" onclick="window.open('https://www.youtube.com/@BuildBerkeley2050/playlists', '_blank')">
+                    <div class="playlist-title">AI for Climate Conference</div>
+                    <div class="playlist-description">
+                        Archive of presentations from an earlier conference exploring the intersection of artificial intelligence and climate solutions.
+                    </div>
+                    <div class="playlist-meta">Multiple videos</div>
+                    <a href="#" class="playlist-link" onclick="event.stopPropagation();">View Playlist →</a>
+                </div>
+                
+                <div class="playlist-card" onclick="window.open('https://www.youtube.com/@BuildBerkeley2050/videos', '_blank')">
+                    <div class="playlist-title">All Videos</div>
+                    <div class="playlist-description">
+                        Complete chronological archive of all Berkeley2050 content, including panel discussions, policy analysis, and community updates.
+                    </div>
+                    <div class="playlist-meta">7 videos total</div>
+                    <a href="#" class="playlist-link" onclick="event.stopPropagation();">View All →</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Video Timestamp Generator</h2>
+            <div class="tool-description">
+                Use this tool to easily create properly formatted timestamps for your YouTube video descriptions. Enter each segment title and its timestamp, then copy the formatted output directly to YouTube.
+            </div>
+            
+            <div class="tool-section">
+                <div class="input-group">
+                    <label for="videoTitle">Video Title (Optional)</label>
+                    <input type="text" id="videoTitle" placeholder="e.g., February 6, 2026 Panel - Development Presentations">
+                    <p class="help-text">This will appear as a heading above the timestamps</p>
+                </div>
+                
+                <div class="input-group">
+                    <label for="timestampInput">Timestamps</label>
+                    <textarea id="timestampInput" placeholder="Enter each segment on a new line in this format:&#10;0:00 Introduction&#10;5:30 First Presentation - John Smith&#10;18:45 Second Presentation - Jane Doe&#10;32:10 Q&A Session"></textarea>
+                    <p class="help-text">Format: MM:SS or H:MM:SS followed by a space and the description</p>
+                </div>
+                
+                <div class="button-group">
+                    <button onclick="generateTimestamps()">Generate Formatted Description</button>
+                    <button onclick="clearForm()" style="background: #666;">Clear</button>
+                </div>
+                
+                <div class="example">
+                    <strong>Example input:</strong><br>
+                    0:00 Welcome and Introduction<br>
+                    3:15 Overview of Berkeley Housing Policy<br>
+                    12:30 Presentation One: Development Proposal<br>
+                    28:45 Presentation Two: Community Impact<br>
+                    45:00 Panel Discussion<br>
+                    1:02:15 Closing Remarks
+                </div>
+                
+                <div id="output" class="output-area"></div>
+                <div id="successMessage" class="success-message"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>How to Use This Timestamp Generator</h2>
+            <ol style="padding-left: 20px; line-height: 1.8;">
+                <li><strong>Watch your video</strong> and note the time when each presentation or segment begins</li>
+                <li><strong>Enter each timestamp</strong> in the format shown above (e.g., "0:00 Introduction")</li>
+                <li><strong>Click "Generate"</strong> to create the formatted description</li>
+                <li><strong>Copy the output</strong> and paste it directly into your YouTube video description</li>
+                <li>YouTube will automatically create clickable chapter markers in your video!</li>
+            </ol>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 6px;">
+                <strong>💡 Pro Tip:</strong> Make sure your first timestamp is always "0:00" for YouTube chapters to work properly. Each description should be clear and concise so viewers know what to expect in that segment.
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Suggested Video Organization</h2>
+            <div style="line-height: 1.8; color: #555;">
+                <p style="margin-bottom: 15px;"><strong>For your February 2026 Panel presentations:</strong></p>
+                <ul style="padding-left: 20px; margin-bottom: 20px;">
+                    <li>Create a dedicated playlist called "February 2026 Panel Presentations"</li>
+                    <li>Add all four presentation videos to this playlist</li>
+                    <li>Use consistent naming: "Feb 2026 Panel - [Topic/Speaker Name]"</li>
+                    <li>Include timestamps in each video description</li>
+                    <li>Add context about the panel, judges, and event in the playlist description</li>
+                </ul>
+                
+                <p style="margin-bottom: 15px;"><strong>For your AI for Climate content:</strong></p>
+                <ul style="padding-left: 20px; margin-bottom: 20px;">
+                    <li>Create a separate playlist called "AI for Climate Conference"</li>
+                    <li>Add conference date and location to the playlist description</li>
+                    <li>Include speaker names and affiliations in video titles</li>
+                </ul>
+                
+                <p style="margin-bottom: 15px;"><strong>For channel homepage organization:</strong></p>
+                <ul style="padding-left: 20px;">
+                    <li>Feature the February 2026 Panel playlist at the top</li>
+                    <li>Place AI for Climate playlist second</li>
+                    <li>Show "All Videos" section third for chronological browsing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function generateTimestamps() {
+            const videoTitle = document.getElementById('videoTitle').value.trim();
+            const input = document.getElementById('timestampInput').value.trim();
+            const output = document.getElementById('output');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (!input) {
+                alert('Please enter at least one timestamp!');
+                return;
+            }
+            
+            const lines = input.split('\n').filter(line => line.trim());
+            let formatted = '';
+            
+            if (videoTitle) {
+                formatted += videoTitle + '\n\n';
+            }
+            
+            formatted += 'CHAPTERS:\n';
+            lines.forEach(line => {
+                formatted += line.trim() + '\n';
+            });
+            
+            formatted += '\n---\n\n';
+            formatted += 'Note: YouTube will automatically create clickable chapter markers when you include timestamps in this format.\n';
+            formatted += 'Make sure the first timestamp starts at 0:00 for chapters to work.';
+            
+            output.textContent = formatted;
+            output.classList.add('show');
+            
+            copyToClipboard(formatted);
+            successMessage.textContent = '✓ Copied to clipboard! Paste this into your YouTube video description.';
+            successMessage.classList.add('show');
+            
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 4000);
+        }
+        
+        function clearForm() {
+            document.getElementById('videoTitle').value = '';
+            document.getElementById('timestampInput').value = '';
+            document.getElementById('output').classList.remove('show');
+            document.getElementById('successMessage').classList.remove('show');
+        }
+        
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>
