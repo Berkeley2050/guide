@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision 2050 City Documents — Berkeley2050</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --surface-alt: #f3f1ed;
+    --text: #1a1a1a;
+    --text-muted: #5c5c5c;
+    --accent: #2d5f3a;
+    --accent-light: #e8f0ea;
+    --border: #e0ddd7;
+    --link: #1a5276;
+    --link-hover: #2d5f3a;
+    --tag-bg: #eee9e0;
+    --tag-text: #6b5d4f;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .page-header .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .back-link:hover { color: var(--link-hover); }
+
+  /* ── Timeline intro ── */
+  .timeline-intro {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .timeline-intro strong { font-weight: 600; }
+
+  /* ── Section headings ── */
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  /* ── Document cards ── */
+  .doc-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .doc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.35rem 1.5rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .doc-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: #c8c4bc;
+  }
+
+  .doc-card .doc-date {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .doc-card h3 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+    line-height: 1.35;
+  }
+  .doc-card h3 a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .doc-card h3 a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+
+  .doc-card .doc-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 0.6rem;
+  }
+
+  .doc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .doc-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .doc-card .doc-format {
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .doc-format svg { width: 14px; height: 14px; }
+
+  /* ── Dividers between groups ── */
+  .group-divider {
+    margin: 2.5rem 0 2rem;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Footer note ── */
+  .footer-note {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .footer-note a { color: var(--link); text-decoration: none; }
+  .footer-note a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .page-wrapper { padding: 1.5rem 1rem 3rem; }
+    .page-header h1 { font-size: 1.7rem; }
+    .doc-card { padding: 1.1rem 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <a href="https://berkeley2050.github.io/guide/" class="back-link">← Back to Berkeley2050 Guide</a>
+
+  <header class="page-header">
+    <h1>Vision 2050 City Documents</h1>
+    <p class="subtitle">Official reports, plans, and council materials from the City of Berkeley</p>
+  </header>
+
+  <div class="timeline-intro">
+    <strong>What is Vision 2050?</strong> In 2018, Berkeley voters approved <strong>Measure R</strong>, advising the Mayor to engage citizens and experts in developing a 30-year plan for climate-smart, technologically-advanced, equitable infrastructure. The initiative produced a series of official reports, community engagement processes, and policy actions — culminating in <strong>Measure FF</strong> (the SAFE STREETS initiative) and the 2025 <strong>Realize Vision 2050</strong> Task Force update.
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FOUNDING DOCUMENTS -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <p class="section-label">Founding &amp; Framework</p>
+  <h2 class="section-title">Core Vision 2050 Reports</h2>
+
+  <div class="doc-list">
+
+    <div class="doc-card">
+      <div class="doc-date">May 2020 · Vision 2050 Task Force</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/documents/Vision-2050-Framework.pdf" target="_blank" rel="noopener">Sustainable and Resilient Infrastructure: Creating a Better Future for Berkeley</a></h3>
+      <p class="doc-desc">The foundational Vision 2050 Framework report. Prepared by a 40+ member resident task force, it lays out core values (equity, resilience, sustainability), surveys Berkeley's infrastructure systems, and recommends five strategies for a 30-year modernization plan. Adopted by City Council in September 2020.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Framework</span>
+        <span class="doc-tag">Task Force</span>
+        <span class="doc-tag">Infrastructure</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">April 2022 · City of Berkeley</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/documents/Strategic-Asset-Management-Plan.pdf" target="_blank" rel="noopener">Strategic Asset Management Plan</a></h3>
+      <p class="doc-desc">Comprehensive assessment of Berkeley's infrastructure assets — streets, sewers, stormwater, buildings, parks, fleet — with a "cradle to grave" management approach. A key implementation step from the Vision 2050 recommendations, establishing how the City tracks and prioritizes infrastructure lifecycle maintenance.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Asset Management</span>
+        <span class="doc-tag">Implementation</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="group-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PROGRAM PLAN & COUNCIL ACTIONS -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <p class="section-label">Program Plan &amp; Council Actions</p>
+  <h2 class="section-title">Planning, Engagement &amp; Revenue Measures</h2>
+
+  <div class="doc-list">
+
+    <div class="doc-card">
+      <div class="doc-date">January 20, 2022 · City Council Worksession</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/2022-04/2022-01-20%20WS%20Item%2001%20Discuss%20Vision%202050.pdf" target="_blank" rel="noopener">Discuss Vision 2050: Infrastructure Priorities, Stakeholder Engagement, and City's Bonding Capacity</a></h3>
+      <p class="doc-desc">Staff presentation to City Council covering community survey results, $1.2+ billion in infrastructure needs, bond capacity analysis from the Government Finance Officers Association, and direction on developing the Vision 2050 Program Plan.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Council Worksession</span>
+        <span class="doc-tag">Bond Capacity</span>
+        <span class="doc-tag">Survey Results</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">May 25, 2022 · Commission Presentation</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/ECC2022-05-25_Item%204_Vision%202050%20Presentation_LATE%20COMMUNICATION.pdf" target="_blank" rel="noopener">Vision 2050 Program Plan — Commission Input Presentation</a></h3>
+      <p class="doc-desc">Slide deck presented to Berkeley commissions covering the Program Plan elements: expected outcomes, prioritization methodology, funding plan, revenue measure options ($600M GO bond), and timeline. Includes community survey results from 1,000+ respondents.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Program Plan</span>
+        <span class="doc-tag">Presentation</span>
+        <span class="doc-tag">Revenue Measure</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">July 26, 2022 · City Council Special Meeting</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/documents/2022-07-26%20Special%20Item%2005%20Placing%20a%20Special%20Tax%20Measure.pdf" target="_blank" rel="noopener">Vision 2050 Program Plan — Placing a Special Tax Measure on the Ballot</a></h3>
+      <p class="doc-desc">The full Vision 2050 Program Plan document as presented to Council for ballot measure consideration. Covers 30-year infrastructure outcomes, prioritization scoring, funding mechanisms and tax impact analysis, community engagement summary, and performance indicators.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Program Plan</span>
+        <span class="doc-tag">Ballot Measure</span>
+        <span class="doc-tag">30-Year Plan</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="group-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- RECENT UPDATE -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <p class="section-label">2024–2025 Update</p>
+  <h2 class="section-title">Realize Vision 2050 — Task Force Update</h2>
+
+  <div class="doc-list">
+
+    <div class="doc-card">
+      <div class="doc-date">March 12, 2024 · City Council</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/documents/2024-03-12%20Item%2013%20Vision%202050%20Community%20Engagement%20Expansion.pdf" target="_blank" rel="noopener">Vision 2050 Community Engagement Expansion and Program Plan</a></h3>
+      <p class="doc-desc">Comprehensive update to the Program Plan with updated infrastructure funding needs, expanded prioritization scorecard, detailed funding mechanisms, debt service and tax impact analysis, and comparison with other cities' capital programs. Covers streets, transportation, stormwater, green infrastructure, marina, and community buildings.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Program Plan Update</span>
+        <span class="doc-tag">Community Engagement</span>
+        <span class="doc-tag">Funding Analysis</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">December 2, 2025 · City Council Special Meeting</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Special%20Item%2001%20Sharing%20the%20Final%20Report%20of%20the%20Mayor.pdf" target="_blank" rel="noopener">Realize Vision 2050: An Update to Vision 2050 and Recommendations to Address Berkeley's Infrastructure</a></h3>
+      <p class="doc-desc">Final report of Mayor Ishii's Realize Vision 2050 Task Force, submitted October 23, 2025. Reviews the five years since the original framework, assesses progress (including passage of Measure FF), addresses accelerating climate threats (wildfire, sea level rise), rising construction costs, and national funding uncertainty. Recommends integrated planning, new technologies, improved project delivery, and a future infrastructure bond measure for November 2026.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Task Force Final Report</span>
+        <span class="doc-tag">2025 Update</span>
+        <span class="doc-tag">Measure FF</span>
+        <span class="doc-tag">Climate Resilience</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">December 2, 2025 · Full Agenda Packet</div>
+      <h3><a href="https://berkeleyca.gov/sites/default/files/city-council-meetings/2025-12-02%20Special%20Agenda%20Packet%20-%20Council.pdf" target="_blank" rel="noopener">Special Meeting Agenda Packet — Vision 2050 Task Force Report &amp; Potential 2026 Ballot Measures</a></h3>
+      <p class="doc-desc">Complete Council agenda packet including the Task Force report, discussion of potential November 2026 bond measure priorities, and staff recommendations on infrastructure project prioritization using the Envision sustainability framework. Also covers planned public infrastructure tours starting April 2026 and Measure FF implementation kickoff.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Agenda Packet</span>
+        <span class="doc-tag">2026 Bond Measure</span>
+        <span class="doc-tag">Envision Framework</span>
+        <span class="doc-tag doc-format">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+          PDF
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="group-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- COMMUNITY RESOURCES -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <p class="section-label">Community Resources</p>
+  <h2 class="section-title">Public Engagement &amp; Background</h2>
+
+  <div class="doc-list">
+
+    <div class="doc-card">
+      <div class="doc-date">December 2021 · City of Berkeley</div>
+      <h3><a href="https://berkeleyca.gov/community-recreation/news/weigh-improving-city-streets-buildings-and-infrastructure" target="_blank" rel="noopener">Weigh In on Improving City Streets, Buildings and Infrastructure</a></h3>
+      <p class="doc-desc">Public-facing announcement for the Vision 2050 community survey. Describes Berkeley's $1 billion+ infrastructure repair needs, the core values driving the initiative (equity, public health and safety, resiliency and sustainability), and the connection to Measure R.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Community Survey</span>
+        <span class="doc-tag">Public Engagement</span>
+        <span class="doc-tag">Web Page</span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">December 2, 2025 · City of Berkeley</div>
+      <h3><a href="https://berkeleyca.gov/city-council-special-meeting-eagenda-december-2-2025" target="_blank" rel="noopener">City Council Special Meeting eAgenda — Vision 2050 Task Force &amp; 2026 Ballot Measures</a></h3>
+      <p class="doc-desc">Official agenda page for the December 2, 2025 special session. Includes links to the Task Force final report, supplemental materials on potential 2026 ballot measures, and the full meeting video archive.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Council Agenda</span>
+        <span class="doc-tag">Meeting Archive</span>
+        <span class="doc-tag">Web Page</span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-date">February 1, 2017 · Berkeley City Council</div>
+      <h3><a href="https://berkeley2050.github.io/guide/presentation.html" target="_blank" rel="noopener">Berkeley Future 2050 — Original Presentation</a></h3>
+      <p class="doc-desc">The 28-slide presentation by Gordon Wozniak and John Gage on bonds, refinancing, infrastructure modernization, climate change, and clean water that launched the Vision 2050 initiative at Berkeley City Council.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">Origin</span>
+        <span class="doc-tag">Presentation</span>
+        <span class="doc-tag">Berkeley2050 Guide</span>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="group-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- INTERACTIVE / COMPUTATIONAL -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <p class="section-label">Interactive &amp; Computational</p>
+  <h2 class="section-title">Berkeley Vision 2050 as a Computational Notebook</h2>
+
+  <div class="doc-list">
+
+    <div class="doc-card" style="border-left: 4px solid var(--accent);">
+      <div class="doc-date">2019–present · JupyterBook · John Gage</div>
+      <h3><a href="https://johngage.github.io/berkeley2050/intro" target="_blank" rel="noopener">Berkeley Vision 2050 — Interactive JupyterBook</a></h3>
+      <p class="doc-desc">The full Vision 2050 Task Force report rebuilt as an interactive JupyterBook. Each chapter of the original report is paired with a companion "Enhanced" chapter linking to live data sources, Jupyter Notebooks, maps, and quantitative analyses. Readers can pull in current data and explore Berkeley's infrastructure challenges in real time — open data, open analysis, open discussion.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">JupyterBook</span>
+        <span class="doc-tag">Interactive</span>
+        <span class="doc-tag">Data Science</span>
+        <span class="doc-tag">Open Analysis</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <p>All documents hosted on <a href="https://berkeleyca.gov" target="_blank" rel="noopener">berkeleyca.gov</a> are public records of the City of Berkeley. This page is maintained as part of the <a href="https://berkeley2050.github.io/guide/">Berkeley2050 Channel Guide</a> to make these resources more accessible to the public.</p>
+    <p style="margin-top: 0.5rem;">Missing a document? <a href="https://www.youtube.com/@BuildBerkeley2050">Contact us via the BuildBerkeley2050 channel</a>.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
