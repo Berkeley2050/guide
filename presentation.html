@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkeley Future 2050 — February 1, 2017 Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #111;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 16px 24px;
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-link {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        header .subtitle {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .download-link {
+            color: #65a3d9;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 14px;
+            border: 1px solid #65a3d9;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .download-link:hover {
+            background: #65a3d9;
+            color: #111;
+        }
+
+        .slideshow-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+            min-height: 0;
+        }
+
+        .slide-wrapper {
+            max-width: 960px;
+            width: 100%;
+            position: relative;
+        }
+
+        .slide-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            background: #fff;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            border: none;
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0,0,0,0.85);
+        }
+
+        .nav-btn.prev {
+            left: -60px;
+        }
+
+        .nav-btn.next {
+            right: -60px;
+        }
+
+        .controls {
+            padding: 16px 24px;
+            background: #1a1a1a;
+            border-top: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .slide-counter {
+            font-size: 14px;
+            color: #888;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            flex: 1;
+            max-width: 400px;
+            height: 3px;
+            background: #333;
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #65a3d9;
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+
+        .thumbnail-strip {
+            padding: 12px 24px;
+            background: #1a1a1a;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .thumb {
+            width: 64px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 3px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.2s, outline-color 0.2s;
+            outline: 2px solid transparent;
+            background: #fff;
+        }
+
+        .thumb:hover {
+            opacity: 0.8;
+        }
+
+        .thumb.active {
+            opacity: 1;
+            outline-color: #65a3d9;
+        }
+
+        @media (max-width: 1100px) {
+            .nav-btn.prev { left: 8px; }
+            .nav-btn.next { right: 8px; }
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 15px; }
+            .nav-btn { width: 36px; height: 36px; font-size: 16px; }
+            .thumb { width: 48px; height: 27px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="./" class="back-link">← Back to Berkeley2050</a>
+            <div>
+                <h1>Bonds, Refinancing, Infrastructure, Climate Change and Clean Water</h1>
+                <div class="subtitle">February 1, 2017 — Gordon Wozniak &amp; John Gage</div>
+            </div>
+        </div>
+        <a href="Feb.-1-2017-BerkeleyFuture-2050.pptx" class="download-link" download>Download PPTX</a>
+    </header>
+
+    <div class="slideshow-container">
+        <div class="slide-wrapper">
+            <button class="nav-btn prev" onclick="changeSlide(-1)" aria-label="Previous slide">&#8249;</button>
+            <img id="slideImg" class="slide-img" src="slides/slide-01.png" alt="Slide 1 of 28">
+            <button class="nav-btn next" onclick="changeSlide(1)" aria-label="Next slide">&#8250;</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <span class="slide-counter" id="counter">1 / 28</span>
+        <div class="progress-bar" id="progressBar" onclick="handleProgressClick(event)">
+            <div class="progress-fill" id="progressFill" style="width: 3.57%"></div>
+        </div>
+    </div>
+
+    <div class="thumbnail-strip" id="thumbStrip"></div>
+
+    <script>
+        const TOTAL_SLIDES = 28;
+        let current = 1;
+
+        function pad(n) { return n.toString().padStart(2, '0'); }
+
+        function goToSlide(n) {
+            current = Math.max(1, Math.min(TOTAL_SLIDES, n));
+            const img = document.getElementById('slideImg');
+            img.src = 'slides/slide-' + pad(current) + '.png';
+            img.alt = 'Slide ' + current + ' of ' + TOTAL_SLIDES;
+            document.getElementById('counter').textContent = current + ' / ' + TOTAL_SLIDES;
+            document.getElementById('progressFill').style.width = (current / TOTAL_SLIDES * 100) + '%';
+
+            document.querySelectorAll('.thumb').forEach((t, i) => {
+                t.classList.toggle('active', i + 1 === current);
+            });
+
+            const activeThumb = document.querySelector('.thumb.active');
+            if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+
+        function changeSlide(delta) {
+            goToSlide(current + delta);
+        }
+
+        function handleProgressClick(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const pct = (e.clientX - rect.left) / rect.width;
+            goToSlide(Math.ceil(pct * TOTAL_SLIDES));
+        }
+
+        // Build thumbnail strip
+        const strip = document.getElementById('thumbStrip');
+        for (let i = 1; i <= TOTAL_SLIDES; i++) {
+            const img = document.createElement('img');
+            img.src = 'slides/slide-' + pad(i) + '.png';
+            img.className = 'thumb' + (i === 1 ? ' active' : '');
+            img.alt = 'Thumbnail slide ' + i;
+            img.onclick = () => goToSlide(i);
+            strip.appendChild(img);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') changeSlide(1);
+            if (e.key === 'Home') goToSlide(1);
+            if (e.key === 'End') goToSlide(TOTAL_SLIDES);
+        });
+    </script>
+</body>
+</html>
